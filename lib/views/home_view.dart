@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/widgets/categories_list_view.dart';
+import '../widgets/categories_list_view.dart';
+import '../widgets/news_list_view_builder.dart';
 
-import '../models/article_model.dart';
-import '../services/news_service.dart';
-import '../widgets/news_list_view.dart';
-
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,29 +26,22 @@ class _HomeViewState extends State<HomeView> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: FutureBuilder<List<ArticleModel>>(
-          future: NewsService().getAllActicles(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              List<ArticleModel> articles = snapshot.data!;
-              return CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  const SliverToBoxAdapter(child: CategoriesListView()),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 32,
-                    ),
-                  ),
-                  NewsListView(articles: articles),
-                ],
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+      body: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+
+        child: CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(child: CategoriesListView()),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 32,
+              ),
+            ),
+            NewsListViewBuilder(
+              category: 'general',
+            ),
+          ],
         ),
         // child: Column(
         //   children: [
