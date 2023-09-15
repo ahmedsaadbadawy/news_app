@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/article_model.dart';
 
 class NewsTile extends StatelessWidget {
   const NewsTile({
     super.key,
+    required this.article,
   });
-
+  final ArticleModel article;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -12,19 +14,19 @@ class NewsTile extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(6),
-          child: Image.asset(
-            'assets/entertaiment.jpg',
+          child: Image.network(
+            '${article.imageUrl}',
             height: 200,
             width: double.infinity,
             fit: BoxFit.cover,
           ),
         ),
         const SizedBox(height: 12),
-        const Text(
-          'Large Title should be places in this place Large Title should be places in this place sdfadsf',
+        Text(
+          article.title ?? '',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black87,
             fontSize: 20,
             fontWeight: FontWeight.w500,
@@ -33,11 +35,11 @@ class NewsTile extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-        const Text(
-          'and here is the desciption of the news you can place your desc here',
+        Text(
+          article.description ?? '',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: Colors.grey, fontSize: 14),
+          style: const TextStyle(color: Colors.grey, fontSize: 14),
         )
       ],
     );
