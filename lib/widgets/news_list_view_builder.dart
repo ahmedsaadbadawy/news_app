@@ -16,18 +16,10 @@ class NewsListViewBuilder extends StatefulWidget {
 }
 
 class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
-  var future;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    future = NewsService().getAllActicles(category: widget.category);
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<ArticleModel>>(
-        future: future,
+        future: NewsService().getAllActicles(category: widget.category),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return NewsListView(
