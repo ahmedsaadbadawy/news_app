@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../models/article_model.dart';
@@ -19,7 +20,7 @@ class _NewsListViewBuilderState extends State<NewsListViewBuilder> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<ArticleModel>>(
-        future: NewsService().getAllActicles(category: widget.category),
+        future: NewsService(Dio()).getAllActicles(category: widget.category),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return NewsListView(
